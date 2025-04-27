@@ -1,0 +1,95 @@
+.payment-history-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+
+  .header {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #666;
+    }
+  }
+
+  .content {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+
+    .chart-section {
+      margin-bottom: 2rem;
+    }
+
+    .payment-list {
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: #1a1a1a;
+      }
+
+      .payment-items {
+        .payment-item {
+          display: flex;
+          align-items: center;
+          padding: 1rem;
+          border-bottom: 1px solid #eee;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          .payment-date {
+            width: 120px;
+            color: #666;
+          }
+
+          .payment-details {
+            flex: 1;
+            .account {
+              font-weight: 500;
+              margin-bottom: 0.25rem;
+            }
+            .amount {
+              color: #666;
+              font-size: 0.9rem;
+            }
+          }
+
+          .payment-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+
+            &.status-on-time {
+              background: rgba(76, 175, 80, 0.1);
+              color: #4CAF50;
+            }
+
+            &.status-late {
+              background: rgba(255, 193, 7, 0.1);
+              color: #FFC107;
+            }
+
+            &.status-missed {
+              background: rgba(244, 67, 54, 0.1);
+              color: #F44336;
+            }
+          }
+        }
+      }
+    }
+  }
+}

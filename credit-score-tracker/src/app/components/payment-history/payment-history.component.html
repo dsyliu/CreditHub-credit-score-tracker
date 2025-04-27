@@ -1,0 +1,32 @@
+<div class="payment-history-container">
+  <div class="header">
+    <h1>Payment History</h1>
+    <p class="subtitle">Track your payment patterns and history</p>
+  </div>
+
+  <div class="content">
+    <div class="chart-section">
+      <highcharts-chart
+        [Highcharts]="Highcharts"
+        [options]="chartOptions"
+        style="width: 100%; height: 300px; display: block;">
+      </highcharts-chart>
+    </div>
+
+    <div class="payment-list">
+      <h2>Recent Payments</h2>
+      <div class="payment-items">
+        <div *ngFor="let payment of paymentRecords" class="payment-item">
+          <div class="payment-date">{{ payment.date }}</div>
+          <div class="payment-details">
+            <div class="account">{{ payment.account }}</div>
+            <div class="amount">${{ payment.amount }}</div>
+          </div>
+          <div class="payment-status" [ngClass]="getStatusClass(payment.status)">
+            {{ getStatusText(payment.status) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

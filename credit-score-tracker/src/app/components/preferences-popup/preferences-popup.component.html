@@ -1,0 +1,24 @@
+<div class="preferences-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>What Matters Most to You?</h2>
+      <button class="close-button" (click)="closePopup()">×</button>
+    </div>
+    
+    <div class="preferences-list">
+      <div class="preference-item" *ngFor="let preference of preferences">
+        <label class="preference-label">
+          <input type="checkbox" 
+                 [checked]="preference.selected"
+                 (change)="togglePreference(preference)">
+          {{ preference.label }}
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="clear-button" (click)="clearPreferences()">Clear</button>
+      <button class="save-button" (click)="savePreferences()">Save</button>
+    </div>
+  </div>
+</div>
