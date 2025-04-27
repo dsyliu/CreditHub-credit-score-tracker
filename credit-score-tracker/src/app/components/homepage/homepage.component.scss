@@ -134,6 +134,7 @@
         display: flex;
         align-items: center;
         gap: 1.5rem;
+        position: relative;
 
         &:hover {
           transform: translateX(4px);
@@ -160,6 +161,35 @@
             color: #666;
             font-size: 0.9rem;
             margin: 0;
+          }
+
+          .status-badge {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: capitalize;
+            color: white;
+
+            &.status-excellent {
+              background-color: #48bb78;
+            }
+
+            &.status-good {
+              background-color: #4299e1;
+            }
+
+            &.status-fair {
+              background-color: #ed8936;
+            }
+
+            &.status-poor {
+              background-color: #f56565;
+            }
           }
         }
       }

@@ -24,10 +24,10 @@ export const creditFocusConfig: { preferenceMappings: PreferenceMapping[] } = {
           baseData: [30, 45, 60, 75, 85, 95] // Knowledge score (0-100)
         },
         {
-          id: "first-credit-card",
-          label: "First Credit Card",
+          id: "number-of-credit-card",
+          label: "Number of Credit Cards",
           description: "Getting and managing your first credit card responsibly",
-          baseData: [0, 0, 0, 0, 0, 0] // Months since first card
+          baseData: [0, 1, 1, 1, 2, 2] // Number of credit cards
         },
         {
           id: "credit-monitoring",

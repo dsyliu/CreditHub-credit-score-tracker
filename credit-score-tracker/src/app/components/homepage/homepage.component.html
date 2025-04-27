@@ -17,43 +17,12 @@
   <div class="main-content">
     <h2 class="section-label">What Cause Your Score to Change</h2>
     <div class="score-categories">
-      <div class="category-card" (click)="navigateToDetail('payment-history')">
+      <div class="category-card" *ngFor="let factor of creditFactors" (click)="navigateToDetail(factor.category)">
         <div class="category-icon">💳</div>
         <div class="category-content">
-          <h3>Payment History</h3>
-          <p>Track your payment patterns and history</p>
-        </div>
-      </div>
-
-      <div class="category-card" (click)="navigateToDetail('debt-amount')">
-        <div class="category-icon">💰</div>
-        <div class="category-content">
-          <h3>Amount of Debt</h3>
-          <p>Monitor your total debt and utilization</p>
-        </div>
-      </div>
-
-      <div class="category-card" (click)="navigateToDetail('credit-history')">
-        <div class="category-icon">📅</div>
-        <div class="category-content">
-          <h3>Length of Credit History</h3>
-          <p>View your credit account age and history</p>
-        </div>
-      </div>
-
-      <div class="category-card" (click)="navigateToDetail('new-credit')">
-        <div class="category-icon">🆕</div>
-        <div class="category-content">
-          <h3>Amount of New Credit</h3>
-          <p>Track recent credit applications and accounts</p>
-        </div>
-      </div>
-
-      <div class="category-card" (click)="navigateToDetail('credit-mix')">
-        <div class="category-icon">🔄</div>
-        <div class="category-content">
-          <h3>Credit Mix</h3>
-          <p>Analyze your types of credit accounts</p>
+          <h3>{{ factor.title }}</h3>
+          <p>{{ factor.description }}</p>
+          <div class="status-badge" [ngClass]="'status-' + factor.status">{{ factor.status | titlecase }}</div>
         </div>
       </div>
     </div>

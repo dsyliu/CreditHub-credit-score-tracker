@@ -53,7 +53,7 @@ export class HomepageComponent implements OnInit {
         }
       }
     },
-    yAxis: [{
+    yAxis: {
       title: {
         text: 'Credit Score',
         style: {
@@ -67,25 +67,8 @@ export class HomepageComponent implements OnInit {
           color: '#2c5282',
           fontSize: '14px'
         }
-      },
-      opposite: false
-    }, {
-      title: {
-        text: 'Credit Focus',
-        style: {
-          color: '#e53e3e'
-        }
-      },
-      min: 0,
-      max: 100,
-      labels: {
-        style: {
-          color: '#e53e3e',
-          fontSize: '14px'
-        }
-      },
-      opposite: true
-    }],
+      }
+    },
     series: [{
       type: 'line',
       name: 'Credit Score',
@@ -94,17 +77,13 @@ export class HomepageComponent implements OnInit {
       lineWidth: 3,
       marker: {
         radius: 6
-      },
-      yAxis: 0
+      }
     }],
     credits: {
       enabled: false
     },
     legend: {
-      enabled: true,
-      align: 'right',
-      verticalAlign: 'middle',
-      layout: 'vertical'
+      enabled: false
     },
     tooltip: {
       shared: true,
@@ -133,30 +112,37 @@ export class HomepageComponent implements OnInit {
     {
       category: 'payment-history',
       title: 'Payment History',
-      description: 'Your track record of paying bills on time',
+      description: 'Track your payment patterns and history',
       status: 'excellent',
       score: 95
     },
     {
-      category: 'credit-utilization',
-      title: 'Credit Utilization',
-      description: 'Amount of credit you\'re using compared to your credit limits',
+      category: 'debt-amount',
+      title: 'Amount of Debt',
+      description: 'Monitor your total debt and utilization',
       status: 'good',
       score: 85
     },
     {
-      category: 'credit-age',
+      category: 'credit-history',
       title: 'Length of Credit History',
-      description: 'How long you\'ve had credit accounts open',
+      description: 'View your credit account age and history',
       status: 'fair',
       score: 75
     },
     {
-      category: 'credit-mix',
-      title: 'Credit Mix',
-      description: 'The variety of credit accounts you have',
+      category: 'new-credit',
+      title: 'Amount of New Credit',
+      description: 'Track recent credit applications and accounts',
       status: 'good',
       score: 80
+    },
+    {
+      category: 'credit-mix',
+      title: 'Credit Mix',
+      description: 'Analyze your types of credit accounts',
+      status: 'excellent',
+      score: 90
     }
   ];
   showPreferencesPopup = false;
@@ -228,8 +214,7 @@ export class HomepageComponent implements OnInit {
           lineWidth: 3,
           marker: {
             radius: 6
-          },
-          yAxis: 0
+          }
         }]
       };
 
@@ -244,7 +229,6 @@ export class HomepageComponent implements OnInit {
           name: focus.label,
           data: focus.baseData,
           color: randomColor,
-          yAxis: 1,
           visible: false // Hide the columns by default
         };
 
