@@ -6,19 +6,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import * as Highcharts from 'highcharts';
 import { PreferencesPopupComponent } from '../preferences-popup/preferences-popup.component';
 import { creditFocusConfig, CreditFocus, PreferenceMapping } from '../../config/credit-focus.config';
-
-interface ScoreIngredientBreakdown {
-  title: string;
-  value: string[];
-}
-
-interface ScoreIngredient {
-  category: string;
-  title: string;
-  description: string;
-  status: 'Exceptional' | 'Very Good' | 'Good' | 'Fair' | 'Poor';
-  breakdown: ScoreIngredientBreakdown[];
-}
+import { ScoreIngredient, ScoreIngredientBreakdown } from '../../config/score-ingredient.config';
+import { scoreHistoryData } from '../../config/score-ingredient.config';
 
 interface SavedPreference {
   id: string;
@@ -38,7 +27,7 @@ interface SavedPreference {
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  currentScore: number = 750;
+  currentScore: number = scoreHistoryData[scoreHistoryData.length - 1].score;
   Highcharts: typeof Highcharts = Highcharts;
   creditScoreChartOptions: Highcharts.Options = {
     chart: {
@@ -50,7 +39,7 @@ export class HomepageComponent implements OnInit {
       text: 'Credit Score'
     },
     xAxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      categories: scoreHistoryData.map(data => data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
       labels: {
         style: {
           fontSize: '14px'
@@ -76,7 +65,7 @@ export class HomepageComponent implements OnInit {
     series: [{
       type: 'line',
       name: 'Credit Score',
-      data: [650, 680, 700, 720, 750, 780],
+      data: scoreHistoryData.map(data => data.score),
       color: '#2c5282',
       lineWidth: 3,
       marker: {
@@ -91,7 +80,7 @@ export class HomepageComponent implements OnInit {
     },
     tooltip: {
       shared: true,
-      formatter: function(this: Highcharts.Point) {
+      formatter: function(this: any) {
         if (!this.series || !this.series.chart) return '';
         
         const points = this.series.chart.hoverPoints;
@@ -100,7 +89,7 @@ export class HomepageComponent implements OnInit {
         let tooltip = `<b>${this.category}</b><br/>`;
         
         // Add all series values
-        this.series.chart.series.forEach(series => {
+        this.series.chart.series.forEach((series: Highcharts.Series) => {
           const point = series.points[this.index];
           if (point && point.y !== undefined) {
             tooltip += `<span style="color:${series.color}">●</span> ${series.name}: <b>${point.y}</b><br/>`;
@@ -112,54 +101,11 @@ export class HomepageComponent implements OnInit {
     }
   };
   scoreIngredients: ScoreIngredient[] = [
-    {
-      category: 'payment-history',
-      title: 'Payment History',
-      description: 'Track your payment patterns and history',
-      status: 'Exceptional',
-      breakdown: []
-    },
-    {
-      category: 'debt-amount',
-      title: 'Amount of Debt',
-      description: 'Monitor your total debt and utilization',
-      status: 'Good',
-      breakdown: [
-        {
-          title: 'Accounts with balances',
-          value: ['7', '7', '8', '7', '7', '7']
-        },
-        {
-          title: 'Total balance on revolving accounts',
-          value: ['3000', '4000', '3000', '5100', '2500', '3300']
-        },
-        {
-          title: 'Revolving utilization',
-          value: ['3%', '4%', '3%', '5%', '2%', '3%']
-        }
-      ]
-    },
-    {
-      category: 'credit-history',
-      title: 'Length of Credit History',
-      description: 'View your credit account age and history',
-      status: 'Fair',
-      breakdown: []
-    },
-    {
-      category: 'new-credit',
-      title: 'Amount of New Credit',
-      description: 'Track recent credit applications and accounts',
-      status: 'Good',
-      breakdown: []
-    },
-    {
-      category: 'credit-mix',
-      title: 'Credit Mix',
-      description: 'Analyze your types of credit accounts',
-      status: 'Exceptional',
-      breakdown: []
-    }
+    scoreHistoryData[scoreHistoryData.length - 1].paymentHistoryScoreIngredient,
+    scoreHistoryData[scoreHistoryData.length - 1].amountOfDebtScoreIngredient,
+    scoreHistoryData[scoreHistoryData.length - 1].creditHistoryScoreIngredient,
+    scoreHistoryData[scoreHistoryData.length - 1].newCreditAmountScoreIngredient,
+    scoreHistoryData[scoreHistoryData.length - 1].creditMixScoreIngredient
   ];
   showPreferencesPopup = false;
   savedPreferences: SavedPreference[] = [];
@@ -225,7 +171,7 @@ export class HomepageComponent implements OnInit {
         series: [{
           type: 'line',
           name: 'Credit Score',
-          data: [650, 680, 700, 720, 750, 780],
+          data: scoreHistoryData.map(data => data.score),
           color: '#2c5282',
           lineWidth: 3,
           marker: {

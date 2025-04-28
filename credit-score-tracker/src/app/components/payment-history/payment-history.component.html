@@ -9,21 +9,47 @@
       <highcharts-chart
         [Highcharts]="Highcharts"
         [options]="chartOptions"
-        style="width: 100%; height: 300px; display: block;">
+        style="width: 100%; height: 500px; display: block;">
       </highcharts-chart>
     </div>
+  </div>
 
-    <div class="payment-list">
-      <h2>Recent Payments</h2>
-      <div class="payment-items">
-        <div *ngFor="let payment of paymentRecords" class="payment-item">
-          <div class="payment-date">{{ payment.date }}</div>
-          <div class="payment-details">
-            <div class="account">{{ payment.account }}</div>
-            <div class="amount">${{ payment.amount }}</div>
+  <div class="chart-spacer"></div>
+
+  <div class="date-range-container">
+    <h2>Payment History Comparison</h2>
+    <div class="date-range-inputs">
+      <div class="date-input">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" [(ngModel)]="startDate" (change)="updateChart()">
+      </div>
+      <div class="date-input">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" [(ngModel)]="endDate" (change)="updateChart()">
+      </div>
+    </div>
+  </div>
+
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="negativeStackChartOptions"
+    style="width: 100%; height: 500px; display: block;"
+  ></highcharts-chart>
+
+  <div class="payment-list">
+    <h2>Recent Payment History</h2>
+    <div class="payment-grid">
+      <div *ngFor="let data of scoreHistoryData" class="payment-tile">
+        <div class="tile-header">
+          <div class="payment-date">{{ data.date | date:'MMM d, y' }}</div>
+          <div class="status-badge" [ngClass]="data.paymentHistoryScoreIngredient.status.toLowerCase()">
+            {{ data.paymentHistoryScoreIngredient.status }}
           </div>
-          <div class="payment-status" [ngClass]="getStatusClass(payment.status)">
-            {{ getStatusText(payment.status) }}
+        </div>
+        <div class="tile-content">
+          <div class="breakdown-item" *ngFor="let item of data.paymentHistoryScoreIngredient.breakdown">
+            <span class="breakdown-label">{{ item.title }}:</span>
+            <span class="breakdown-value">{{ item.value }}</span>
           </div>
         </div>
       </div>

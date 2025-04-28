@@ -11,83 +11,163 @@
 
     h1 {
       font-size: 2.5rem;
-      font-weight: 700;
+      color: #2c5282;
       margin-bottom: 0.5rem;
-      color: #1a1a1a;
     }
 
     .subtitle {
-      font-size: 1.1rem;
-      color: #666;
+      font-size: 1.2rem;
+      color: #718096;
     }
   }
 
   .content {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
+    margin-bottom: 2rem;
+  }
 
-    .chart-section {
-      margin-bottom: 2rem;
+  .chart-spacer {
+    height: 2rem;
+  }
+
+  .payment-list {
+    margin-top: 3rem;
+
+    h2 {
+      font-size: 1.8rem;
+      color: #2c5282;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
 
-    .payment-list {
-      h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-        color: #1a1a1a;
-      }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
 
-      .payment-items {
-        .payment-item {
+      .payment-tile {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tile-header {
           display: flex;
+          justify-content: space-between;
           align-items: center;
-          padding: 1rem;
-          border-bottom: 1px solid #eee;
-
-          &:last-child {
-            border-bottom: none;
-          }
+          margin-bottom: 1rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid #e2e8f0;
 
           .payment-date {
-            width: 120px;
-            color: #666;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
           }
 
-          .payment-details {
-            flex: 1;
-            .account {
-              font-weight: 500;
-              margin-bottom: 0.25rem;
-            }
-            .amount {
-              color: #666;
-              font-size: 0.9rem;
-            }
-          }
-
-          .payment-status {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
+          .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
             font-weight: 500;
 
-            &.status-on-time {
-              background: rgba(76, 175, 80, 0.1);
-              color: #4CAF50;
+            &.exceptional {
+              background-color: #c6f6d5;
+              color: #2f855a;
             }
 
-            &.status-late {
-              background: rgba(255, 193, 7, 0.1);
-              color: #FFC107;
+            &.very-good {
+              background-color: #bee3f8;
+              color: #2b6cb0;
             }
 
-            &.status-missed {
-              background: rgba(244, 67, 54, 0.1);
-              color: #F44336;
+            &.good {
+              background-color: #fefcbf;
+              color: #975a16;
+            }
+
+            &.fair {
+              background-color: #fed7d7;
+              color: #c53030;
+            }
+
+            &.poor {
+              background-color: #e2e8f0;
+              color: #4a5568;
             }
           }
+        }
+
+        .tile-content {
+          .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+
+            .breakdown-label {
+              color: #4a5568;
+              font-weight: 500;
+            }
+
+            .breakdown-value {
+              color: #2d3748;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .date-range-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 1.5rem;
+    }
+
+    .date-range-inputs {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .date-input {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      label {
+        font-weight: 500;
+        color: #555;
+      }
+
+      input[type="date"] {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: #333;
+        background-color: white;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
         }
       }
     }
