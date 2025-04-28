@@ -125,71 +125,79 @@
       margin-bottom: 3rem;
 
       .category-card {
+        display: flex;
+        align-items: flex-start;
+        padding: 1.5rem;
         background: #ffffff;
-        padding: 1.25rem;
-        border-radius: 8px;
+        border-radius: 12px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        position: relative;
 
         &:hover {
-          transform: translateX(4px);
+          transform: translateY(-2px);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .category-icon {
-          font-size: 1.75rem;
-          color: #2c5282;
-          min-width: 40px;
-          text-align: center;
+          font-size: 2rem;
+          margin-right: 1rem;
         }
 
         .category-content {
           flex: 1;
 
-          h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-            color: #1a1a1a;
+          .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+
+            h3 {
+              margin: 0;
+              font-size: 1.25rem;
+              color: #2d3748;
+            }
+
+            .status-badge {
+              padding: 0.25rem 0.75rem;
+              border-radius: 9999px;
+              font-size: 0.875rem;
+              font-weight: 600;
+              text-transform: uppercase;
+
+              &.status-Exceptional {
+                background-color: #c6f6d5;
+                color: #2f855a;
+              }
+
+              &.status-Very\ Good {
+                background-color: #bee3f8;
+                color: #2b6cb0;
+              }
+
+              &.status-Good {
+                background-color: #fefcbf;
+                color: #975a16;
+              }
+
+              &.status-Fair {
+                background-color: #fed7d7;
+                color: #c53030;
+              }
+
+              &.status-Poor {
+                background-color: #e2e8f0;
+                color: #4a5568;
+              }
+            }
           }
 
           p {
-            color: #666;
-            font-size: 0.9rem;
             margin: 0;
-          }
-
-          .status-badge {
-            position: absolute;
-            right: 1.25rem;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: capitalize;
-            color: white;
-
-            &.status-excellent {
-              background-color: #48bb78;
-            }
-
-            &.status-good {
-              background-color: #4299e1;
-            }
-
-            &.status-fair {
-              background-color: #ed8936;
-            }
-
-            &.status-poor {
-              background-color: #f56565;
-            }
+            color: #718096;
+            font-size: 0.875rem;
+            line-height: 1.5;
           }
         }
       }

@@ -17,12 +17,22 @@
   <div class="main-content">
     <h2 class="section-label">What Cause Your Score to Change</h2>
     <div class="score-categories">
-      <div class="category-card" *ngFor="let factor of creditFactors" (click)="navigateToDetail(factor.category)">
-        <div class="category-icon">💳</div>
+      <div class="category-card" *ngFor="let factor of scoreIngredients" (click)="navigateToDetail(factor.category)">
+        <div class="category-icon">
+          <ng-container [ngSwitch]="factor.category">
+            <span *ngSwitchCase="'payment-history'">💳</span>
+            <span *ngSwitchCase="'debt-amount'">💰</span>
+            <span *ngSwitchCase="'credit-history'">📅</span>
+            <span *ngSwitchCase="'new-credit'">🆕</span>
+            <span *ngSwitchCase="'credit-mix'">🔄</span>
+          </ng-container>
+        </div>
         <div class="category-content">
-          <h3>{{ factor.title }}</h3>
+          <div class="category-header">
+            <h3>{{ factor.title }}</h3>
+            <div class="status-badge" [ngClass]="'status-' + factor.status">{{ factor.status | titlecase }}</div>
+          </div>
           <p>{{ factor.description }}</p>
-          <div class="status-badge" [ngClass]="'status-' + factor.status">{{ factor.status | titlecase }}</div>
         </div>
       </div>
     </div>

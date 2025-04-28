@@ -7,12 +7,17 @@ import * as Highcharts from 'highcharts';
 import { PreferencesPopupComponent } from '../preferences-popup/preferences-popup.component';
 import { creditFocusConfig, CreditFocus, PreferenceMapping } from '../../config/credit-focus.config';
 
-interface CreditFactor {
+interface ScoreIngredientBreakdown {
+  title: string;
+  value: string[];
+}
+
+interface ScoreIngredient {
   category: string;
   title: string;
   description: string;
-  status: 'excellent' | 'good' | 'fair' | 'poor';
-  score: number;
+  status: 'Exceptional' | 'Very Good' | 'Good' | 'Fair' | 'Poor';
+  breakdown: ScoreIngredientBreakdown[];
 }
 
 interface SavedPreference {
@@ -35,7 +40,6 @@ interface SavedPreference {
 export class HomepageComponent implements OnInit {
   currentScore: number = 750;
   Highcharts: typeof Highcharts = Highcharts;
-  
   creditScoreChartOptions: Highcharts.Options = {
     chart: {
       type: 'line',
@@ -107,42 +111,54 @@ export class HomepageComponent implements OnInit {
       }
     }
   };
-
-  creditFactors: CreditFactor[] = [
+  scoreIngredients: ScoreIngredient[] = [
     {
       category: 'payment-history',
       title: 'Payment History',
       description: 'Track your payment patterns and history',
-      status: 'excellent',
-      score: 95
+      status: 'Exceptional',
+      breakdown: []
     },
     {
       category: 'debt-amount',
       title: 'Amount of Debt',
       description: 'Monitor your total debt and utilization',
-      status: 'good',
-      score: 85
+      status: 'Good',
+      breakdown: [
+        {
+          title: 'Accounts with balances',
+          value: ['7', '7', '8', '7', '7', '7']
+        },
+        {
+          title: 'Total balance on revolving accounts',
+          value: ['3000', '4000', '3000', '5100', '2500', '3300']
+        },
+        {
+          title: 'Revolving utilization',
+          value: ['3%', '4%', '3%', '5%', '2%', '3%']
+        }
+      ]
     },
     {
       category: 'credit-history',
       title: 'Length of Credit History',
       description: 'View your credit account age and history',
-      status: 'fair',
-      score: 75
+      status: 'Fair',
+      breakdown: []
     },
     {
       category: 'new-credit',
       title: 'Amount of New Credit',
       description: 'Track recent credit applications and accounts',
-      status: 'good',
-      score: 80
+      status: 'Good',
+      breakdown: []
     },
     {
       category: 'credit-mix',
       title: 'Credit Mix',
       description: 'Analyze your types of credit accounts',
-      status: 'excellent',
-      score: 90
+      status: 'Exceptional',
+      breakdown: []
     }
   ];
   showPreferencesPopup = false;
@@ -170,7 +186,7 @@ export class HomepageComponent implements OnInit {
     }, 0);
 
     // Check for show_preferences parameter
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params: { [key: string]: string }) => {
       this.showPreferencesPopup = params['show_preferences'] === 'true';
     });
 
