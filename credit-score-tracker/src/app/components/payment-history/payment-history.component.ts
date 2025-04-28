@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 export class PaymentHistoryComponent {
   Highcharts: typeof Highcharts = Highcharts;
   scoreHistoryData = [...scoreHistoryData].sort((a, b) => a.date.getTime() - b.date.getTime());
+  showWarningModal = false;
   
   // Date range for filtering
   startDate: string = this.scoreHistoryData[0].date.toISOString().split('T')[0];

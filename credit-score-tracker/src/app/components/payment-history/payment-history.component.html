@@ -1,7 +1,34 @@
 <div class="payment-history-container">
   <div class="header">
-    <h1>Payment History</h1>
+    <div class="header-content">
+      <h1>Payment History</h1>
+      <button class="warning-icon" (click)="showWarningModal = true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </button>
+    </div>
     <p class="subtitle">Track your payment patterns and history</p>
+  </div>
+
+  <!-- Warning Modal -->
+  <div class="modal-overlay" *ngIf="showWarningModal" (click)="showWarningModal = false">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Payment History Warning</h3>
+        <button class="close-button" (click)="showWarningModal = false">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>The following categories are not performing well and may impact your credit score:</p>
+        <ul>
+          <li>Account always paid as agreed in last 30 days</li>
+          <li>Months since most recent late payment in last 90 days</li>
+        </ul>
+        <p>Please click here to create goals for improvements and to automatically track your progress.</p>
+      </div>
+    </div>
   </div>
 
   <div class="content">
@@ -37,7 +64,10 @@
   ></highcharts-chart>
 
   <div class="payment-list">
-    <h2>Recent Payment History</h2>
+    <div class="header-container">
+      <h2>Payment History</h2>
+    </div>
+
     <div class="payment-grid">
       <div *ngFor="let data of scoreHistoryData" class="payment-tile">
         <div class="tile-header">

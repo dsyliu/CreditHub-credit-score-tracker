@@ -9,10 +9,36 @@
     margin-bottom: 2rem;
     text-align: center;
 
-    h1 {
-      font-size: 2.5rem;
-      color: #2c5282;
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       margin-bottom: 0.5rem;
+
+      h1 {
+        font-size: 2.5rem;
+        color: #2c5282;
+        margin: 0;
+      }
+
+      .warning-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        color: #e53e3e;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
     }
 
     .subtitle {
@@ -32,16 +58,42 @@
   .payment-list {
     margin-top: 3rem;
 
-    h2 {
-      font-size: 1.8rem;
-      color: #2c5282;
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       margin-bottom: 1.5rem;
-      text-align: center;
+
+      h2 {
+        font-size: 1.8rem;
+        color: #2c5282;
+        margin: 0;
+        text-align: center;
+      }
+
+      .warning-icon {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+        color: #e53e3e;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
     }
 
     .payment-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: 1fr;
       gap: 1.5rem;
       padding: 1rem;
 
@@ -49,7 +101,7 @@
         background: #ffffff;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 1.5rem;
+        padding: 1.2rem;
         transition: transform 0.2s ease-in-out;
 
         &:hover {
@@ -61,20 +113,20 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 1rem;
-          padding-bottom: 0.5rem;
+          margin-bottom: 0.8rem;
+          padding-bottom: 0.4rem;
           border-bottom: 1px solid #e2e8f0;
 
           .payment-date {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #2d3748;
           }
 
           .status-badge {
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 9999px;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 500;
 
             &.exceptional {
@@ -108,8 +160,8 @@
           .breakdown-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.8rem;
 
             .breakdown-label {
               color: #4a5568;
@@ -169,6 +221,73 @@
           border-color: #007bff;
           box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
         }
+      }
+    }
+  }
+}
+
+// Modal styles moved to root level
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h3 {
+      margin: 0;
+      color: #2c5282;
+      font-size: 1.5rem;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #718096;
+      padding: 0;
+      line-height: 1;
+
+      &:hover {
+        color: #2d3748;
+      }
+    }
+  }
+
+  .modal-body {
+    p {
+      margin: 0 0 1rem 0;
+      color: #4a5568;
+    }
+
+    ul {
+      margin: 0 0 1rem 0;
+      padding-left: 1.5rem;
+      color: #4a5568;
+
+      li {
+        margin-bottom: 0.5rem;
       }
     }
   }

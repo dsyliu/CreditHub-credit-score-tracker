@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -39,10 +39,13 @@ export class HomepageComponent implements OnInit {
       text: 'Credit Score'
     },
     xAxis: {
-      categories: scoreHistoryData.map(data => data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })),
+      type: 'datetime',
       labels: {
         style: {
           fontSize: '14px'
+        },
+        formatter: function() {
+          return Highcharts.dateFormat('%b %d, %Y', Number(this.value));
         }
       }
     },
@@ -65,13 +68,54 @@ export class HomepageComponent implements OnInit {
     series: [{
       type: 'line',
       name: 'Credit Score',
-      data: scoreHistoryData.map(data => data.score),
+      data: scoreHistoryData.map(data => ({
+        x: data.date.getTime(),
+        y: data.score
+      })),
       color: '#2c5282',
       lineWidth: 3,
       marker: {
         radius: 6
       }
+    }, {
+      type: 'line',
+      name: 'Predicted Score',
+      data: [
+        { x: new Date('2025-04-01').getTime(), y: scoreHistoryData[scoreHistoryData.length - 1].score },
+        { x: new Date('2025-10-01').getTime(), y: 800 }
+      ],
+      color: '#2c5282',
+      lineWidth: 3,
+      dashStyle: 'ShortDash',
+      marker: {
+        radius: 6
+      },
+      dataLabels: {
+        enabled: true,
+        format: '{y}',
+        style: {
+          fontSize: '12px'
+        }
+      }
     }],
+    plotOptions: {
+      series: {
+        dashStyle: 'Solid',
+        states: {
+          hover: {
+            lineWidthPlus: 0
+          }
+        },
+        point: {
+          events: {
+            click: (event: any) => {
+              this.selectedDate = Highcharts.dateFormat('%b %d, %Y', event.point.x);
+              this.cdr.detectChanges();
+            }
+          }
+        }
+      }
+    },
     credits: {
       enabled: false
     },
@@ -86,7 +130,7 @@ export class HomepageComponent implements OnInit {
         const points = this.series.chart.hoverPoints;
         if (!points || points.length === 0) return '';
         
-        let tooltip = `<b>${this.category}</b><br/>`;
+        let tooltip = `<b>${Highcharts.dateFormat('%b %d, %Y', this.x)}</b><br/>`;
         
         // Add all series values
         this.series.chart.series.forEach((series: Highcharts.Series) => {
@@ -117,10 +161,14 @@ export class HomepageComponent implements OnInit {
     'learn-finance': "I want to learn more about my financial situation"
   };
   creditFocuses: CreditFocus[] = [];
+  showWarningModal = false;
+  warningMessage = 'Your payment history shows some late payments that are affecting your credit score. Consider making payments on time to improve your score.';
+  selectedDate: string = 'Today';
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -138,6 +186,21 @@ export class HomepageComponent implements OnInit {
 
     // Load saved preferences and credit focuses
     this.loadSavedPreferences();
+
+    this.creditScoreChartOptions = {
+      ...this.creditScoreChartOptions,
+      chart: {
+        ...this.creditScoreChartOptions.chart,
+        events: {
+          click: (event: any) => {
+            if (event.point) {
+              this.selectedDate = Highcharts.dateFormat('%b %d, %Y', event.point.x);
+              this.cdr.detectChanges();
+            }
+          }
+        }
+      }
+    };
   }
 
   loadSavedPreferences() {
@@ -171,11 +234,34 @@ export class HomepageComponent implements OnInit {
         series: [{
           type: 'line',
           name: 'Credit Score',
-          data: scoreHistoryData.map(data => data.score),
+          data: scoreHistoryData.map(data => ({
+            x: data.date.getTime(),
+            y: data.score
+          })),
           color: '#2c5282',
           lineWidth: 3,
           marker: {
             radius: 6
+          }
+        }, {
+          type: 'line',
+          name: 'Predicted Score',
+          data: [
+            { x: new Date('2025-04-01').getTime(), y: scoreHistoryData[scoreHistoryData.length - 1].score },
+            { x: new Date('2025-10-01').getTime(), y: 800 }
+          ],
+          color: '#2c5282',
+          lineWidth: 3,
+          dashStyle: 'ShortDash',
+          marker: {
+            radius: 6
+          },
+          dataLabels: {
+            enabled: true,
+            format: '{y}',
+            style: {
+              fontSize: '12px'
+            }
           }
         }]
       };
@@ -224,5 +310,9 @@ export class HomepageComponent implements OnInit {
 
   navigateToDetail(category: string) {
     this.router.navigate([category]);
+  }
+
+  closeWarningModal() {
+    this.showWarningModal = false;
   }
 }
